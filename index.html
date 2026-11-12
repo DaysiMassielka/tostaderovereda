@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Café de especialidad por suscripción · Lanzamiento</title>
+  <meta name="description" content="Suscripción mensual de café de especialidad, tostado hace menos de siete días y entregado en tu puerta. Reservá tu lugar en el lanzamiento.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --crema: #faf5ee;
+      --crema-2: #f3eadd;
+      --espresso: #2b1d14;
+      --texto: #3b2b20;
+      --texto-suave: #6e5a4b;
+      --acento: #c0762c;
+      --acento-hover: #a85f1e;
+      --borde: #e4d6c4;
+      --blanco: #ffffff;
+      --sombra: 0 10px 30px rgba(43, 29, 20, 0.08);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --crema: #1d1510;
+        --crema-2: #261c15;
+        --espresso: #f6ead9;
+        --texto: #eadccb;
+        --texto-suave: #b8a48f;
+        --acento: #e0953f;
+        --acento-hover: #f0a95a;
+        --borde: #3d2d22;
+        --blanco: #241a14;
+        --sombra: 0 10px 30px rgba(0, 0, 0, 0.35);
+      }
+    }
+    :root[data-theme="dark"] {
+      --crema: #1d1510;
+      --crema-2: #261c15;
+      --espresso: #f6ead9;
+      --texto: #eadccb;
+      --texto-suave: #b8a48f;
+      --acento: #e0953f;
+      --acento-hover: #f0a95a;
+      --borde: #3d2d22;
+      --blanco: #241a14;
+      --sombra: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--crema);
+      color: var(--texto);
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    h1, h2, h3 {
+      font-family: "Fraunces", Georgia, serif;
+      color: var(--espresso);
+      line-height: 1.15;
+      margin: 0 0 0.5em;
+    }
+    h1 { font-size: clamp(2.2rem, 6vw, 3.8rem); font-weight: 700; }
+    h2 { font-size: clamp(1.7rem, 4vw, 2.5rem); font-weight: 700; }
+    h3 { font-size: 1.25rem; font-weight: 500; }
+    p { margin: 0 0 1em; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+
+    .contenedor {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    section { padding: 72px 0; }
+    .etiqueta {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 12px;
+    }
+    .centrado { text-align: center; }
+    .suave { color: var(--texto-suave); }
+
+    /* Botones */
+    .boton {
+      display: inline-block;
+      background: var(--acento);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 28px;
+      font: inherit;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 6px 18px rgba(192, 118, 44, 0.28);
+    }
+    .boton:hover { background: var(--acento-hover); transform: translateY(-2px); }
+    .boton:focus-visible { outline: 3px solid var(--acento); outline-offset: 3px; }
+
+    /* Header */
+    .barra {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: color-mix(in srgb, var(--crema) 88%, transparent);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--borde);
+    }
+    .barra .contenedor {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .marca {
+      font-family: "Fraunces", Georgia, serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--espresso);
+      text-decoration: none;
+    }
+    .barra .boton { padding: 10px 18px; font-size: 0.92rem; box-shadow: none; }
+
+    /* Hero */
+    .hero {
+      padding: 80px 0 96px;
+      background:
+        radial-gradient(circle at 85% 20%, color-mix(in srgb, var(--acento) 22%, transparent), transparent 45%),
+        var(--crema);
+    }
+    .hero .contenedor {
+      display: grid;
+      gap: 48px;
+      align-items: center;
+    }
+    .hero p.lead {
+      font-size: 1.15rem;
+      color: var(--texto-suave);
+      max-width: 36ch;
+      margin-bottom: 28px;
+    }
+    .hero-visual {
+      aspect-ratio: 4 / 5;
+      border-radius: 28px;
+      background:
+        linear-gradient(160deg, #6b4226 0%, #2b1d14 100%);
+      box-shadow: var(--sombra);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      width: 62%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #d9a066, #8a4f22 70%);
+      left: 50%;
+      top: 45%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 0 18px rgba(255, 255, 255, 0.06), 0 0 0 40px rgba(255, 255, 255, 0.03);
+    }
+    .hero-visual span {
+      position: absolute;
+      left: 24px;
+      bottom: 24px;
+      right: 24px;
+      color: #f6ead9;
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.35rem;
+      line-height: 1.3;
+    }
+    .pastilla {
+      display: inline-block;
+      background: var(--blanco);
+      border: 1px solid var(--borde);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 0.88rem;
+      color: var(--texto-suave);
+      margin-bottom: 20px;
+    }
+
+    /* Beneficios */
+    .beneficios {
+      display: grid;
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .tarjeta {
+      background: var(--blanco);
+      border: 1px solid var(--borde);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: var(--sombra);
+    }
+    .tarjeta .icono {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--acento) 16%, transparent);
+      display: grid;
+      place-items: center;
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+    }
+    .tarjeta p { color: var(--texto-suave); margin: 0; }
+
+    /* Planes */
+    .fondo-2 { background: var(--crema-2); }
+    .planes {
+      display: grid;
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .plan {
+      background: var(--blanco);
+      border: 1px solid var(--borde);
+      border-radius: 22px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .plan.destacado {
+      border: 2px solid var(--acento);
+      box-shadow: var(--sombra);
+    }
+    .plan .etiqueta-destacada {
+      position: absolute;
+      top: -13px;
+      left: 28px;
+      background: var(--acento);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+    .precio {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--espresso);
+      margin: 8px 0 4px;
+    }
+    .precio small {
+      font-family: "Inter", sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--texto-suave);
+    }
+    .plan ul {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0 28px;
+      color: var(--texto-suave);
+      flex: 1;
+    }
+    .plan li { padding: 6px 0 6px 26px; position: relative; }
+    .plan li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 12px;
+      height: 6px;
+      border-left: 2px solid var(--acento);
+      border-bottom: 2px solid var(--acento);
+      transform: rotate(-45deg);
+    }
+    .plan .boton { text-align: center; }
+    .nota-precios {
+      text-align: center;
+      color: var(--texto-suave);
+      font-size: 0.92rem;
+      margin-top: 24px;
+    }
+
+    /* Como funciona */
+    .pasos {
+      list-style: none;
+      padding: 0;
+      margin: 40px 0 0;
+      display: grid;
+      gap: 24px;
+      counter-reset: paso;
+    }
+    .pasos li {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+    .pasos .numero {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--espresso);
+      color: var(--crema);
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.4rem;
+      display: grid;
+      place-items: center;
+    }
+    .pasos p { color: var(--texto-suave); margin: 0; }
+    .centrado .boton { margin-top: 40px; }
+
+    /* FAQ */
+    details {
+      background: var(--blanco);
+      border: 1px solid var(--borde);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-bottom: 12px;
+    }
+    details summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--espresso);
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    details summary::after { content: "+"; color: var(--acento); font-size: 1.4rem; line-height: 1; }
+    details[open] summary::after { content: "–"; }
+    details p { color: var(--texto-suave); margin: 12px 0 0; }
+    .faq { max-width: 760px; margin: 40px auto 0; }
+
+    /* Formulario */
+    .reserva {
+      background: var(--espresso);
+      color: #f6ead9;
+    }
+    .reserva h2, .reserva h3 { color: #fff7ec; }
+    .reserva .etiqueta { color: #e9a866; }
+    .reserva .suave { color: #cdbba6; }
+    .reserva .contenedor {
+      display: grid;
+      gap: 48px;
+    }
+    .formulario {
+      background: var(--crema);
+      color: var(--texto);
+      border-radius: 24px;
+      padding: 32px 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    }
+    .campo { margin-bottom: 18px; }
+    .campo label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: var(--espresso);
+      margin-bottom: 6px;
+    }
+    .campo .opcional { font-weight: 400; color: var(--texto-suave); }
+    .campo input, .campo select {
+      width: 100%;
+      font: inherit;
+      color: var(--texto);
+      background: var(--blanco);
+      border: 1px solid var(--borde);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+    .campo input:focus, .campo select:focus {
+      outline: 3px solid color-mix(in srgb, var(--acento) 40%, transparent);
+      border-color: var(--acento);
+    }
+    .campo .error {
+      display: none;
+      color: #b3261e;
+      font-size: 0.85rem;
+      margin-top: 6px;
+    }
+    .campo.invalido input, .campo.invalido select { border-color: #b3261e; }
+    .campo.invalido .error { display: block; }
+    .fila { display: grid; gap: 0; }
+    .check {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.92rem;
+      color: var(--texto-suave);
+      margin: 6px 0 22px;
+    }
+    .check input { margin-top: 5px; width: 18px; height: 18px; accent-color: var(--acento); }
+    .formulario .boton { width: 100%; }
+    .formulario .boton:disabled { opacity: 0.6; cursor: wait; transform: none; }
+    .confirmacion {
+      display: none;
+      text-align: center;
+      padding: 40px 12px;
+    }
+    .confirmacion .marca-ok {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: var(--acento);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 1.8rem;
+    }
+
+    /* Pie */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--borde);
+      color: var(--texto-suave);
+      font-size: 0.92rem;
+    }
+    footer .contenedor {
+      display: grid;
+      gap: 12px;
+      text-align: center;
+    }
+    .pie-correo { text-align: right; }
+    footer a { text-decoration: none; border-bottom: 1px solid var(--borde); }
+
+    /* Anchos mayores */
+    @media (min-width: 720px) {
+      section { padding: 96px 0; }
+      .hero .contenedor { grid-template-columns: 1.1fr 0.9fr; }
+      .beneficios { grid-template-columns: repeat(3, 1fr); }
+      .planes { grid-template-columns: repeat(3, 1fr); }
+      .fila { grid-template-columns: 1fr 1fr; gap: 0 16px; }
+      .formulario { padding: 40px 36px; }
+    }
+    @media (min-width: 960px) {
+      .reserva .contenedor { grid-template-columns: 1fr 1.1fr; align-items: start; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="barra">
+    <div class="contenedor">
+      <a class="marca" href="#inicio">Tostadero Vereda</a>
+      <a class="boton" href="#reservar">Reservar mi lugar</a>
+    </div>
+  </header>
+
+  <!-- 1. Hero -->
+  <section class="hero" id="inicio">
+    <div class="contenedor">
+      <div>
+        <span class="pastilla">Lanzamiento · cupos limitados</span>
+        <h1>Café de especialidad, tostado cada mes y en tu puerta.</h1>
+        <p class="lead">Elegís tu plan, nosotros tostamos y te lo enviamos. Sin pedirlo cada vez, sin granos viejos.</p>
+        <a class="boton" href="#reservar">Reservar mi lugar</a>
+      </div>
+      <div class="hero-visual" role="img" aria-label="Taza de café y granos sobre fondo oscuro">
+        <span>Granos de origen único, tostados hace menos de siete días.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Beneficios y planes -->
+  <section>
+    <div class="contenedor">
+      <div class="centrado">
+        <span class="etiqueta">Por qué suscribirte</span>
+        <h2>Café fresco sin tener que acordarte</h2>
+        <p class="suave" style="max-width: 56ch; margin: 0 auto;">Te explicamos qué recibís y cuánto cuesta, para que elijas sin sorpresas.</p>
+      </div>
+
+      <div class="beneficios">
+        <article class="tarjeta">
+          <div class="icono" aria-hidden="true">📦</div>
+          <h3>Entrega automática</h3>
+          <p>Llega cada mes o cada quince días, según lo que elijas. No tenés que volver a pedirlo.</p>
+        </article>
+        <article class="tarjeta">
+          <div class="icono" aria-hidden="true">🔥</div>
+          <h3>Tostado reciente</h3>
+          <p>Cada lote se tuesta hace menos de siete días para que llegue en su mejor momento.</p>
+        </article>
+        <article class="tarjeta">
+          <div class="icono" aria-hidden="true">🔄</div>
+          <h3>Sin compromiso</h3>
+          <p>Podés pausar, cambiar de origen o cancelar cuando quieras, sin llamar a nadie.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2b. Planes y precios (parte del paso 2) -->
+  <section class="fondo-2" id="planes">
+    <div class="contenedor">
+      <div class="centrado">
+        <span class="etiqueta">Planes y precios</span>
+        <h2>Elegí cuánto café tomás</h2>
+        <p class="suave" style="max-width: 56ch; margin: 0 auto;">Los precios incluyen envío dentro del país. Durante el lanzamiento, el primer mes tiene un 10 % de descuento.</p>
+      </div>
+
+      <div class="planes">
+        <article class="plan">
+          <h3>Plan chico</h3>
+          <div class="precio">US$ 14 <small>/ envío</small></div>
+          <p class="suave">250 g por entrega</p>
+          <ul>
+            <li>Ideal si tomás una o dos tazas al día</li>
+            <li>Elegís el origen cada mes</li>
+            <li>Envío incluido</li>
+          </ul>
+          <a class="boton" href="#reservar" data-plan="Plan chico (250 g)">Quiero este plan</a>
+        </article>
+
+        <article class="plan destacado">
+          <span class="etiqueta-destacada">Más elegido</span>
+          <h3>Plan mediano</h3>
+          <div class="precio">US$ 25 <small>/ envío</small></div>
+          <p class="suave">500 g por entrega</p>
+          <ul>
+            <li>Para cafés de todo el día</li>
+            <li>Podés pedir dos orígenes distintos</li>
+            <li>Envío incluido</li>
+          </ul>
+          <a class="boton" href="#reservar" data-plan="Plan mediano (500 g)">Quiero este plan</a>
+        </article>
+
+        <article class="plan">
+          <h3>Plan grande</h3>
+          <div class="precio">US$ 45 <small>/ envío</small></div>
+          <p class="suave">1 kg por entrega</p>
+          <ul>
+            <li>Pensado para oficinas y casas con varias personas</li>
+            <li>Acceso anticipado a lotes limitados</li>
+            <li>Envío incluido</li>
+          </ul>
+          <a class="boton" href="#reservar" data-plan="Plan grande (1 kg)">Quiero este plan</a>
+        </article>
+      </div>
+
+      <p class="nota-precios">Precios de lanzamiento en dólares. Cancelás cuando quieras.</p>
+    </div>
+  </section>
+
+  <!-- 3. Cómo funciona -->
+  <section>
+    <div class="contenedor">
+      <div class="centrado">
+        <span class="etiqueta">Cómo funciona</span>
+        <h2>Tres pasos y listo</h2>
+      </div>
+
+      <ol class="pasos" style="max-width: 640px; margin-left: auto; margin-right: auto;">
+        <li>
+          <span class="numero">1</span>
+          <div>
+            <h3>Elegís tu plan</h3>
+            <p>Escogés cuánto café querés por entrega y con qué frecuencia.</p>
+          </div>
+        </li>
+        <li>
+          <span class="numero">2</span>
+          <div>
+            <h3>Recibís tu café</h3>
+            <p>Tostamos tu lote y lo enviamos con fecha de tueste en el paquete.</p>
+          </div>
+        </li>
+        <li>
+          <span class="numero">3</span>
+          <div>
+            <h3>Cambiás cuando quieras</h3>
+            <p>Probás otro origen, pausás o cancelás. Todo se maneja con un mensaje.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="centrado">
+        <a class="boton" href="#reservar">Reservar mi lugar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Preguntas frecuentes -->
+  <section class="fondo-2">
+    <div class="contenedor">
+      <div class="centrado">
+        <span class="etiqueta">Preguntas frecuentes</span>
+        <h2>Lo que más nos preguntan</h2>
+      </div>
+
+      <div class="faq">
+        <details open>
+          <summary>¿Cuánto tarda el envío?</summary>
+          <p>Entre dos y cinco días hábiles dentro de la ciudad y la zona metropolitana. En el resto del país, entre cinco y ocho días.</p>
+        </details>
+        <details>
+          <summary>¿Qué formas de pago aceptan?</summary>
+          <p>Tarjeta de crédito o débito y transferencia bancaria. El cobro se hace al inicio de cada ciclo.</p>
+        </details>
+        <details>
+          <summary>¿Cómo cancelo o pauso la suscripción?</summary>
+          <p>Nos escribís por email o WhatsApp y lo resolvemos el mismo día. No hay penalidades ni plazos mínimos.</p>
+        </details>
+        <details>
+          <summary>¿Puedo cambiar el tipo de café?</summary>
+          <p>Sí. Cada mes elegís entre los orígenes disponibles. Si preferís un perfil más suave o más intenso, también lo ajustamos.</p>
+        </details>
+        <details>
+          <summary>¿Hacen molienda?</summary>
+          <p>Sí, en el formulario de reserva podés pedir el café en grano o molido para cafetera de émbolo, moka o espresso.</p>
+        </details>
+        <details>
+          <summary>¿Qué pasa si no me gusta un lote?</summary>
+          <p>Nos avisás dentro de los siete días de recibido y te enviamos otro origen en el siguiente envío.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Formulario de reserva (acción principal) -->
+  <section class="reserva" id="reservar">
+    <div class="contenedor">
+      <div>
+        <span class="etiqueta">Lanzamiento</span>
+        <h2>Reservá tu lugar en el lanzamiento</h2>
+        <p class="suave">Es sin compromiso. Completá el formulario y te escribimos en menos de 24 horas para confirmar tu plan y coordinar el primer envío.</p>
+        <p class="suave">Los cupos del primer lote son limitados.</p>
+      </div>
+
+      <div class="formulario">
+        <form id="form-reserva" name="reserva" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+          <input type="hidden" name="form-name" value="reserva">
+          <p hidden>
+            <label>No llenar: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+          </p>
+          <div id="contenido-form">
+            <div class="campo" data-campo>
+              <label for="nombre">Nombre</label>
+              <input id="nombre" name="nombre" type="text" autocomplete="name" required>
+              <div class="error">Escribí tu nombre.</div>
+            </div>
+
+            <div class="campo" data-campo>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required>
+              <div class="error">Ingresá un email válido.</div>
+            </div>
+
+            <div class="campo">
+              <label for="telefono">Teléfono o WhatsApp <span class="opcional">(opcional)</span></label>
+              <input id="telefono" name="telefono" type="tel" autocomplete="tel">
+            </div>
+
+            <div class="fila">
+              <div class="campo" data-campo>
+                <label for="plan">Plan de interés</label>
+                <select id="plan" name="plan" required>
+                  <option value="">Elegí un plan</option>
+                  <option>Plan chico (250 g) · US$ 14</option>
+                  <option selected>Plan mediano (500 g) · US$ 25</option>
+                  <option>Plan grande (1 kg) · US$ 45</option>
+                </select>
+                <div class="error">Elegí un plan.</div>
+              </div>
+
+              <div class="campo" data-campo>
+                <label for="frecuencia">Frecuencia</label>
+                <select id="frecuencia" name="frecuencia" required>
+                  <option value="">Elegí una frecuencia</option>
+                  <option selected>Mensual</option>
+                  <option>Quincenal</option>
+                </select>
+                <div class="error">Elegí una frecuencia.</div>
+              </div>
+            </div>
+
+            <div class="fila">
+              <div class="campo" data-campo>
+                <label for="ciudad">Ciudad o zona de envío</label>
+                <input id="ciudad" name="ciudad" type="text" autocomplete="address-level2" required>
+                <div class="error">Indicá tu ciudad o zona.</div>
+              </div>
+
+              <div class="campo">
+                <label for="molienda">Preparación</label>
+                <select id="molienda" name="molienda">
+                  <option selected>Grano entero</option>
+                  <option>Molido para espresso</option>
+                  <option>Molido para moka o émbolo</option>
+                </select>
+              </div>
+            </div>
+
+            <label class="check">
+              <input type="checkbox" name="novedades" id="novedades">
+              <span>Quiero recibir novedades sobre lotes y promociones. Podés darte de baja cuando quieras.</span>
+            </label>
+
+            <button class="boton" type="submit" id="enviar">Quiero reservar mi lugar</button>
+          </div>
+
+          <div class="confirmacion" id="confirmacion" role="status" aria-live="polite">
+            <div class="marca-ok" aria-hidden="true">✓</div>
+            <h3>Listo, recibimos tu reserva</h3>
+            <p class="suave">Te escribimos a tu email en las próximas 24 horas para confirmar el plan y la fecha del primer envío.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="contenedor">
+      <div class="pie-correo">
+        <a href="mailto:reserva@tostaderovereda.com">reserva@tostaderovereda.com</a>
+      </div>
+      <div>© 2026 Tostadero Vereda · Derechos reservados</div>
+    </div>
+  </footer>
+
+  <script>
+    // Endpoint donde llegan las reservas. Ver la nota de configuración al final del archivo.
+    const FORM_ENDPOINT = "";
+
+    const form = document.getElementById("form-reserva");
+    const contenido = document.getElementById("contenido-form");
+    const confirmacion = document.getElementById("confirmacion");
+    const boton = document.getElementById("enviar");
+
+    // Botones de planes: preselecciona el plan en el formulario.
+    document.querySelectorAll("[data-plan]").forEach((el) => {
+      el.addEventListener("click", () => {
+        const select = document.getElementById("plan");
+        const valor = el.dataset.plan;
+        for (const op of select.options) {
+          if (op.text.startsWith(valor)) select.value = op.value;
+        }
+      });
+    });
+
+    function validar() {
+      let ok = true;
+      form.querySelectorAll("[data-campo]").forEach((campo) => {
+        const input = campo.querySelector("input, select");
+        const vacio = !input.value.trim();
+        const emailMal = input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
+        const invalido = vacio || emailMal;
+        campo.classList.toggle("invalido", invalido);
+        if (invalido) ok = false;
+      });
+      return ok;
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!validar()) {
+        form.querySelector(".invalido input, .invalido select")?.focus();
+        return;
+      }
+
+      const datos = Object.fromEntries(new FormData(form).entries());
+      datos.novedades = form.novedades.checked ? "Sí" : "No";
+      datos.origen = "Landing lanzamiento";
+      datos.fecha = new Date().toISOString();
+
+      boton.disabled = true;
+      boton.textContent = "Enviando...";
+
+      try {
+        if (FORM_ENDPOINT) {
+          const res = await fetch(FORM_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify(datos),
+          });
+          if (!res.ok) throw new Error("Respuesta no válida");
+        } else if (location.protocol === "file:") {
+          // Prueba local desde el archivo: no hay servidor, así que no se envía nada.
+          console.info("Reserva (prueba local, no se envía):", datos);
+        } else {
+          // Netlify Forms: se envía como formulario codificado con el nombre "reserva".
+          const res = await fetch("/", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams(new FormData(form)).toString(),
+          });
+          if (!res.ok) throw new Error("Respuesta no válida");
+        }
+
+        contenido.style.display = "none";
+        confirmacion.style.display = "block";
+        confirmacion.scrollIntoView({ behavior: "smooth", block: "center" });
+      } catch (err) {
+        boton.disabled = false;
+        boton.textContent = "Quiero reservar mi lugar";
+        alert("No pudimos enviar tu reserva. Probá de nuevo en unos minutos.");
+      }
+    });
+  </script>
+
+  <!--
+    CONFIGURACIÓN DEL ENVÍO POR EMAIL
+    Para que cada reserva llegue a un correo, creá un formulario en un servicio como
+    Formspree (formspree.io) o Google Apps Script, copiá la URL del endpoint y pegala
+    entre las comillas de FORM_ENDPOINT, arriba en el script.
+  -->
+
+</body>
+</html>
