@@ -456,7 +456,7 @@
   <header class="barra">
     <div class="contenedor">
       <a class="marca" href="#inicio">Tostadero Vereda</a>
-      <a class="boton" href="#reservar">Reservar mi lugar</a>
+      <a class="boton" href="#reservar">Reserva tu pedido</a>
     </div>
   </header>
 
@@ -467,7 +467,7 @@
         <span class="pastilla">Lanzamiento · cupos limitados</span>
         <h1>Café de especialidad, tostado cada mes y en tu puerta.</h1>
         <p class="lead">Elegís tu plan, nosotros tostamos y te lo enviamos. Sin pedirlo cada vez, sin granos viejos.</p>
-        <a class="boton" href="#reservar">Reservar mi lugar</a>
+        <a class="boton" href="#reservar">Reserva tu pedido</a>
       </div>
       <div class="hero-visual" role="img" aria-label="Taza de café y granos sobre fondo oscuro">
         <span>Granos de origen único, tostados hace menos de siete días.</span>
@@ -589,7 +589,7 @@
       </ol>
 
       <div class="centrado">
-        <a class="boton" href="#reservar">Reservar mi lugar</a>
+        <a class="boton" href="#reservar">Reserva tu pedido</a>
       </div>
     </div>
   </section>
@@ -661,7 +661,7 @@
             </div>
 
             <div class="campo">
-              <label for="telefono">Teléfono o WhatsApp <span class="opcional">(opcional)</span></label>
+              <label for="telefono">Teléfono</label>
               <input id="telefono" name="telefono" type="tel" autocomplete="tel">
             </div>
 
@@ -695,14 +695,20 @@
                 <div class="error">Indicá tu ciudad o zona.</div>
               </div>
 
-              <div class="campo">
-                <label for="molienda">Preparación</label>
-                <select id="molienda" name="molienda">
-                  <option selected>Grano entero</option>
-                  <option>Molido para espresso</option>
-                  <option>Molido para moka o émbolo</option>
-                </select>
+              <div class="campo" data-campo>
+                <label for="codigo-postal">Código postal</label>
+                <input id="codigo-postal" name="codigo_postal" type="text" autocomplete="postal-code" maxlength="12" required>
+                <div class="error">Indicá tu código postal.</div>
               </div>
+            </div>
+
+            <div class="campo">
+              <label for="molienda">Preparación</label>
+              <select id="molienda" name="molienda">
+                <option selected>Grano entero</option>
+                <option>Molido para espresso</option>
+                <option>Molido para moka o émbolo</option>
+              </select>
             </div>
 
             <label class="check">
@@ -710,7 +716,7 @@
               <span>Quiero recibir novedades sobre lotes y promociones. Podés darte de baja cuando quieras.</span>
             </label>
 
-            <button class="boton" type="submit" id="enviar">Quiero reservar mi lugar</button>
+            <button class="boton" type="submit" id="enviar">Reserva tu pedido</button>
           </div>
 
           <div class="confirmacion" id="confirmacion" role="status" aria-live="polite">
@@ -806,7 +812,7 @@
         confirmacion.scrollIntoView({ behavior: "smooth", block: "center" });
       } catch (err) {
         boton.disabled = false;
-        boton.textContent = "Quiero reservar mi lugar";
+        boton.textContent = "Reserva tu pedido";
         alert("No pudimos enviar tu reserva. Probá de nuevo en unos minutos.");
       }
     });
